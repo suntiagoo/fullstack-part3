@@ -26,15 +26,12 @@ const persons = [
 
 
 app.get('/api/persons', (request, response) => {
-    const now = Date();
-    console.log(now)
-    console.log(now.toLocaleString())
     response.json(persons)
 })
 
 app.get('/info', (request, response) => {
     const now = Date();
-    response.send(`<p> PhoneBook has info for ${persons.length}<p/>
+    response.send(`<p> PhoneBook has info for ${persons.length} people<p/>
          <p> ${now} <p/>`)
 
 })

@@ -4,7 +4,7 @@ const app = express()
 const persons = [
     {
         "id": 1,
-        "name": "Arto Hellas",
+        "name": "Arturo Hellas",
         "number": "040-123456"
     },
     {
@@ -23,8 +23,20 @@ const persons = [
         "number": "39-23-6423122"
     }
 ]
+
+
 app.get('/api/persons', (request, response) => {
+    const now = Date();
+    console.log(now)
+    console.log(now.toLocaleString())
     response.json(persons)
+})
+
+app.get('/info', (request, response) => {
+    const now = Date();
+    response.send(`<p> PhoneBook has info for ${persons.length}<p/>
+         <p> ${now} <p/>`)
+
 })
 
 const PORT = '3001'

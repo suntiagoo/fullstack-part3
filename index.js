@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 
+app.use(express.json())
+
 const persons = [
     {
         "id": 1,
@@ -48,10 +50,30 @@ app.get('/api/persons/:id', (request, response) => {
     }
 })
 
-app.delete('/api/persons/:id', (request, response) => {
+app.delete('/api/persons/', (request, response) => {
     const id = Number(request.params.id)
-    const person = persons.filter(person => person.id !== id)
+    persons = persons.filter(person => person.id !== id)
     response.status(204).end()
+})
+
+app.post('/api/persons/', (request, response) => {
+
+    const body = request.body
+    console.log(body)
+
+    const randowId = () => Math.floor(Math.random() * 1500)
+
+    if (!body.name) {
+        response.status(400).json({ error: 'the name is missing' })
+    }
+
+    const person = {
+        id: randowId(),
+        name: body.name,
+        number: body.number
+    }
+
+    response.json(persons.concat(person))
 })
 
 

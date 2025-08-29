@@ -5,9 +5,11 @@ const app = express()
 
 
 app.use(express.json())
-app.use(morgan('tiny'))
+//app.use(morgan('tiny'))
 
 
+morgan.token('body', function (req) { return JSON.stringify(req.body) })
+app.use(morgan(':method :url :response-time :body'))
 
 
 const persons = [
@@ -82,13 +84,9 @@ app.post('/api/persons/', (request, response) => {
             name: body.name,
             number: body.number
         }
-
         return response.json(persons.concat(person))
-
     }
-
 })
-
 
 const PORT = '3001'
 app.listen(PORT, () => {

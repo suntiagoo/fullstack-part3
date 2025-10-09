@@ -8,13 +8,18 @@ const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 //app.use(morgan('tiny'))
-
+app.use(express.static('dist'))
 
 morgan.token('body', function (req) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :response-time :body'))
 
 
-let persons = []
+let persons = [
+    {
+        "id": 1,
+        "name": "Arto Hellas",
+        "number": "040-123456"
+    },]
 
 app.get('/api/persons', (request, response) => {
     response.json(persons)

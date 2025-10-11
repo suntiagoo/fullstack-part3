@@ -48,10 +48,13 @@ app.get('/api/persons/:id', (request, response) => {
     }
 })
 
-app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    persons = persons.filter(person => person.id !== id)
-    response.status(204).end()
+app.delete('/api/persons/:id', (request, response, next) => {
+    Contact.findByIdAndDelete(request.params.id).then(result => {
+        console.log(result)
+        response.status(200).end()
+    }).catch(error => next(error))
+
+
 })
 
 app.post('/api/persons', (request, response) => {
@@ -63,7 +66,7 @@ app.post('/api/persons', (request, response) => {
 
             const contact = new Contact({
                 name: body.name,
-                phone: body.phone,
+                phone: body.number,
             })
 
             contact.save().then(result => {
@@ -76,8 +79,6 @@ app.post('/api/persons', (request, response) => {
         }
 
     })
-
-
 
     /*Contact.find({}).then(result => {
          result.find(contact => {

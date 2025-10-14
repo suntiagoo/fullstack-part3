@@ -38,7 +38,7 @@ app.get('/api/persons/:id', (request, response, next) => {
     Contact.findById(request.params.id).then(result => {
         //console.log(result)
         if (result) {
-            response.json({ result })
+            response.json(result)
         } else {
             response.status(400).end()
         }

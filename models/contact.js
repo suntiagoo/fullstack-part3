@@ -1,20 +1,8 @@
 require('dotenv').config()
-const mongoose = require('mongoose')
+const mongoDB = require('./index')
 
-mongoose.set('strictQuery', false)
-const url = process.env.MONGODB_URI
 
-console.log('connecting to', url)
-
-mongoose.connect(url)
-    .then(result => {
-        console.log('connected to MongoDB')
-    })
-    .catch(error => {
-        console.log('error connecting to MongoDB:', error.message)
-    })
-
-const phoneBookSchema = new mongoose.Schema({
+const phoneBookSchema = new mongoDB.Schema({
     name: String,
     phone: Number,
 })
@@ -28,4 +16,4 @@ phoneBookSchema.set('toJSON', {
 })
 
 
-module.exports = mongoose.model('Contact', phoneBookSchema)
+module.exports = mongoDB.model('Contact', phoneBookSchema)

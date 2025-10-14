@@ -25,6 +25,7 @@ let persons = [
     },]
 
 app.get('/api/persons', (request, response, next) => {
+
     Contact.find({}).then(result => {
         //console.log(result)
         response.json(result)
@@ -53,17 +54,7 @@ app.get('/info', (request, response) => {
     })
 })
 
-app.delete('/api/persons/:id', (request, response, next) => {
-    Contact.findByIdAndDelete(request.params.id).then(result => {
-        console.log(result)
-        if (result) {
-            response.status(204).end()
-        }
-        response.status(404).send({ error: '404 Not Found, the data is not in the database' })
-    }).catch(error => next(error))
 
-
-})
 
 app.post('/api/persons', (request, response) => {
     const body = request.body
@@ -81,52 +72,24 @@ app.post('/api/persons', (request, response) => {
                 return response.status(200).json(result)
             })
 
-        } else {
+        } /*else {
             return response.status(400).json({ error: 'the name is missing or number' })
-        }
-
+        }*/
     })
-
-    /*Contact.find({}).then(result => {
-         result.find(contact => {
-             if (contact.name === body.name) {
-                 return response.status(400).json({ error: 'the name is missing or number' })
-             }
-         })
-     }).then(value => {
-         if (!value) {
- 
-             const contact = new Contact({
-                 name: body.name,
-                 phone: body.phone,
-             })
- 
-             contact.save().then(result => {
-                 console.log('note saved!')
-                 //return response.json(result)
-             })
-         }
-     })*/
-
-
-
-    /*if (!body.name || !body.number) {
-        return response.status(400).json({ error: 'the name is missing or number' })
-
-    } 
-
-    else if (persons.find(person => person.name === body.name)) {
-        return response.status(400).json({ error: 'name must be unique' })
-    } else {
-        const person = {
-            id: randowId(),
-            name: body.name,
-            number: body.number
-        }
-        return response.json(persons.concat(person))
-    }*/
 })
 
+
+app.delete('/api/persons/:id', (request, response, next) => {
+    Contact.findByIdAndDelete(request.params.id).then(result => {
+        console.log(result)
+        if (result) {
+            return response.status(204).end()
+        }
+        return response.status(404).send({ error: '404 Not Found, the data is not in the database' })
+    }).catch(error => next(error))
+
+
+})
 
 app.put('/api/persons/:id', (request, response, next) => {
     const body = request.body
@@ -136,11 +99,11 @@ app.put('/api/persons/:id', (request, response, next) => {
         phone: body.phone
     }
 
-    Contact.findByIdAndUpdate(request.params.id, contact, { phone: 'field of number' }).then(result => {
+    Contact.findByIdAndUpdate(request.params.id, contact, { new: true }).then(result => {
         if (result) {
-            response.status(200).send({ message: 'the cell number was update' })
+            return response.json(result)
         }
-        response.status(404).send({ error: '' })
+        return response.status(404).send({ error: '' })
     }
     ).catch(error => next(error))
 })

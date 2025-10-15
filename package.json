@@ -7,7 +7,8 @@
         "dev": "nodemon index.js",
         "test": "echo \"Error: no test specified\" && exit 1",
         "build:ui": "rm -rf dist && cd ../fullstack/part2/phonebook && npm run build && cp -r dist ../../../part3-backend",
-        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
+        "lint": "eslint ."
     },
     "keywords": [],
     "author": "",
@@ -21,6 +22,9 @@
         "morgan": "^1.10.1"
     },
     "devDependencies": {
+        "@stylistic/eslint-plugin": "^5.4.0",
+        "eslint": "^9.37.0",
+        "globals": "^16.4.0",
         "nodemon": "^3.1.10"
     }
 }
